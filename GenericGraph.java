@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +18,7 @@ class GenericGraph {
     private boolean directed;
     private boolean weighted;
     private Map<Integer, List<Edge>> adjList;
+    public static final int infinito = Integer.MAX_VALUE;
 
     GenericGraph(boolean directed, boolean weighted) {
         this.directed = directed;
@@ -77,5 +79,22 @@ class GenericGraph {
             }
             System.out.println();
         }
+    }
+
+    int[][] obtenerMatrizDeAdyacencia() {
+        int n = adjList.size();
+        int[][] matriz = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(matriz[i], infinito);
+            matriz[i][i] = 0;
+        }
+
+        for (int de : adjList.keySet()) {
+            for (Edge edge : adjList.get(de)) {
+                matriz[de][edge.to] = edge.weight;
+            }
+        }
+        return matriz;
     }
 }
