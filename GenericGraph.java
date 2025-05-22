@@ -18,21 +18,31 @@ class GenericGraph {
     private boolean directed;
     private boolean weighted;
     private Map<Integer, List<Edge>> adjList;
-    public static final int infinito = Integer.MAX_VALUE;
+    private Map<Integer, String> nombreNodos;
+    public static final int infinito = Integer.MAX_VALUE / 2;
 
     GenericGraph(boolean directed, boolean weighted) {
         this.directed = directed;
         this.weighted = weighted;
         this.adjList = new HashMap<>();
+        this.nombreNodos = new HashMap<>();
     }
 
     void addVertex(int vertex) {
         adjList.putIfAbsent(vertex, new ArrayList<>());
     }
 
+    void asignarNombre(int id, String nombre) {
+        nombreNodos.put(id, nombre);
+    }
+
+    String obtenerNombre(int id) {
+        return nombreNodos.getOrDefault(id, "Nodo " + id);
+    }
+
     void addEdge(int from, int to, int weight) {
         if (!weighted) {
-        weight = 1;
+            weight = 1;
         }
 
         addVertex(from);
@@ -56,26 +66,20 @@ class GenericGraph {
             }
         }
     }
+
     void removeVertex(int vertex) {
         adjList.remove(vertex);
-        // for (List<Edge> edges : adjList.values()) {
-        // edges.removeIf(edge -> edge.to == vertex);
-        // }
-
-        for (Map.Entry<Integer, List<Edge>> entry : adjList.entrySet()) {
-            List<Edge> edges = entry.getValue();
-            for (int i = edges.size() - 1; i >= 0; i--) {
-                if (edges.get(i).to == vertex) {
-                    edges.remove(i);
-                }
-            }
+        nombreNodos.remove(vertex);
+        for (List<Edge> edges : adjList.values()) {
+            edges.removeIf(edge -> edge.to == vertex);
         }
     }
+
     void printGraph() {
         for (int vertex : adjList.keySet()) {
-            System.out.print("Vertex " + vertex + ":");
+            System.out.print(obtenerNombre(vertex) + " (" + vertex + "):");
             for (Edge edge : adjList.get(vertex)) {
-                System.out.print(" -> " + edge.to + "(" + edge.weight + ")");
+                System.out.print(" -> " + obtenerNombre(edge.to) + "(" + edge.weight + ")");
             }
             System.out.println();
         }
@@ -95,6 +99,7 @@ class GenericGraph {
                 matriz[de][edge.to] = edge.weight;
             }
         }
+
         return matriz;
     }
 }
