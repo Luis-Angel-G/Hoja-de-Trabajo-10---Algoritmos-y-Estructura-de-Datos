@@ -24,7 +24,7 @@ public class Main {
             boolean continuar = true;
 
             while (continuar) {
-            System.out.println("1. Mostrar matriz de caminos más cortos (Floyd-Warshall)");
+            System.out.println("1. Mostrar matriz de caminos más cortos (Floyd)");
             System.out.println("2. Calcular centro del grafo");
             System.out.println("3. Agregar nodo");
             System.out.println("4. Eliminar nodo");
@@ -50,7 +50,7 @@ public class Main {
                     if (centro == -1) {
                         System.out.println("No se encontró un centro del grafo (nodo aislado o sin conexiones).\n");
                     } else {
-                        System.out.println("Centro del grafo: " + grafo.obtenerNombre(centro) + " (índice " + centro + ")");
+                        System.out.println("Centro del grafo: " + grafo.obtenerNombre(centro));
                     }
                 }
                 case 3 -> {

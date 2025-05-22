@@ -60,7 +60,7 @@ public class Floyd {
         for (int i = 0; i < n; i++) {
             System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
             for (int j = 0; j < n; j++) {
-                String valor = (matriz[i][j] == infinito) ? "INF" : String.valueOf(matriz[i][j]);
+                String valor = (matriz[i][j] == infinito) ? "infinito" : String.valueOf(matriz[i][j]);
                 System.out.printf("%-" + colWidth + "s", valor);
             }
             System.out.println();
@@ -71,7 +71,7 @@ public class Floyd {
         int n = next.length;
         int colWidth = 22;
 
-        System.out.println("\nTabla de rutas (siguiente nodo):");
+        System.out.println("\nTabla de rutas:");
 
         // Encabezado
         System.out.printf("%-" + colWidth + "s", "");
