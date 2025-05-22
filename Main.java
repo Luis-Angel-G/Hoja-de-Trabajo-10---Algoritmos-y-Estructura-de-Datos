@@ -2,28 +2,28 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        GenericGraph grafo = new GenericGraph(true, true); // dirigido y ponderado
+        try (Scanner scanner = new Scanner(System.in)) {
+            GenericGraph grafo = new GenericGraph(true, true); // dirigido y ponderado
 
-        // Asignar nombres iniciales
-        grafo.asignarNombre(0, "Ciudad de Guatemala");
-        grafo.asignarNombre(1, "Zacapa");
-        grafo.asignarNombre(2, "Chiquimula");
-        grafo.asignarNombre(3, "Quetzaltenango");
-        grafo.asignarNombre(4, "Cobán");
+            // Asignar nombres iniciales
+            grafo.asignarNombre(0, "Ciudad de Guatemala");
+            grafo.asignarNombre(1, "Zacapa");
+            grafo.asignarNombre(2, "Chiquimula");
+            grafo.asignarNombre(3, "Quetzaltenango");
+            grafo.asignarNombre(4, "Cobán");
 
-        // Aristas iniciales
-        grafo.addEdge(0, 1, 3);
-        grafo.addEdge(0, 3, 7);
-        grafo.addEdge(1, 2, 1);
-        grafo.addEdge(1, 4, 8);
-        grafo.addEdge(2, 3, 2);
-        grafo.addEdge(3, 4, 3);
-        grafo.addEdge(4, 0, 4);
+            // Aristas iniciales
+            grafo.addEdge(0, 1, 3);
+            grafo.addEdge(0, 3, 7);
+            grafo.addEdge(1, 2, 1);
+            grafo.addEdge(1, 4, 8);
+            grafo.addEdge(2, 3, 2);
+            grafo.addEdge(3, 4, 3);
+            grafo.addEdge(4, 0, 4);
 
-        boolean continuar = true;
+            boolean continuar = true;
 
-        while (continuar) {
+            while (continuar) {
             System.out.println("1. Mostrar matriz de caminos más cortos (Floyd-Warshall)");
             System.out.println("2. Calcular centro del grafo");
             System.out.println("3. Agregar nodo");
@@ -36,15 +36,14 @@ public class Main {
             int opcion = scanner.nextInt();
 
             switch (opcion) {
-                case 1: {
+                case 1 -> {
                     int[][] matriz = grafo.obtenerMatrizDeAdyacencia();
                     Floyd.ResultadoFloyd resultado = Floyd.calcularConRutas(matriz, GenericGraph.infinito);
                     System.out.println("\nMatriz de distancias más cortas:");
                     Floyd.imprimirMatrizConNombres(resultado.distancias, GenericGraph.infinito, grafo);
                     Floyd.imprimirMatrizSiguiente(resultado.siguiente, grafo);
-                    break;
                 }
-                case 2: {
+                case 2 -> {
                     int[][] matriz = grafo.obtenerMatrizDeAdyacencia();
                     Floyd.ResultadoFloyd resultado = Floyd.calcularConRutas(matriz, GenericGraph.infinito);
                     int centro = CentroDelGrafo.calcular(resultado.distancias, GenericGraph.infinito);
@@ -53,9 +52,8 @@ public class Main {
                     } else {
                         System.out.println("Centro del grafo: " + grafo.obtenerNombre(centro) + " (índice " + centro + ")");
                     }
-                    break;
                 }
-                case 3: {
+                case 3 -> {
                     System.out.print("Ingrese el número del nuevo nodo: ");
                     int nodo = scanner.nextInt();
                     grafo.addVertex(nodo);
@@ -64,16 +62,14 @@ public class Main {
                     String nombre = scanner.nextLine();
                     grafo.asignarNombre(nodo, nombre);
                     System.out.println("Nodo " + nodo + " (" + nombre + ") agregado.");
-                    break;
                 }
-                case 4: {
+                case 4 -> {
                     System.out.print("Ingrese el número del nodo a eliminar: ");
                     int nodo = scanner.nextInt();
                     grafo.removeVertex(nodo);
                     System.out.println("Nodo " + nodo + " eliminado.");
-                    break;
                 }
-                case 5: {
+                case 5 -> {
                     System.out.print("Nodo origen: ");
                     int from = scanner.nextInt();
                     System.out.print("Nodo destino: ");
@@ -82,33 +78,27 @@ public class Main {
                     int peso = scanner.nextInt();
                     grafo.addEdge(from, to, peso);
                     System.out.println("Arista " + from + " -> " + to + " agregada.");
-                    break;
                 }
-                case 6: {
+                case 6 -> {
                     System.out.print("Nodo origen: ");
                     int from = scanner.nextInt();
                     System.out.print("Nodo destino: ");
                     int to = scanner.nextInt();
                     grafo.removeEdge(from, to);
                     System.out.println("Arista " + from + " -> " + to + " eliminada.");
-                    break;
                 }
-                case 7: {
+                case 7 -> {
                     System.out.println("Grafo (lista de adyacencia):");
                     grafo.printGraph();
-                    break;
                 }
-                case 8: {
+                case 8 -> {
                     continuar = false;
                     System.out.println("Saliendo del programa...");
-                    break;
                 }
-                default:
-                    System.out.println("Opción no válida. Intente de nuevo.");
-                    break;
+                default -> System.out.println("Opción no válida. Intente de nuevo.");
             }
         }
 
-        scanner.close();
+        }
     }
 }

@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class GenericGraph {
+public class GenericGraph {
     class Edge {
         int to;
         int weight;
@@ -15,10 +15,10 @@ class GenericGraph {
         }
     }
 
-    private boolean directed;
-    private boolean weighted;
-    private Map<Integer, List<Edge>> adjList;
-    private Map<Integer, String> nombreNodos;
+    private final boolean directed;
+    private final boolean weighted;
+    private final Map<Integer, List<Edge>> adjList;
+    private final Map<Integer, String> nombreNodos;
     public static final int infinito = Integer.MAX_VALUE / 2;
 
     GenericGraph(boolean directed, boolean weighted) {
