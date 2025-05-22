@@ -45,18 +45,16 @@ public class Floyd {
 
     public static void imprimirMatrizConNombres(int[][] matriz, int infinito, GenericGraph grafo) {
         int n = matriz.length;
-        int colWidth = 22; // Ajusta el ancho de cada columna
+        int colWidth = 22;
 
         System.out.println("\nMatriz de distancias más cortas:");
-
-        // Imprimir encabezado de columnas
+    
         System.out.printf("%-" + colWidth + "s", "");
         for (int i = 0; i < n; i++) {
             System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
         }
         System.out.println();
 
-        // Imprimir filas con nombres
         for (int i = 0; i < n; i++) {
             System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
             for (int j = 0; j < n; j++) {
@@ -73,14 +71,12 @@ public class Floyd {
 
         System.out.println("\nTabla de rutas:");
 
-        // Encabezado
         System.out.printf("%-" + colWidth + "s", "");
         for (int i = 0; i < n; i++) {
             System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
         }
         System.out.println();
 
-        // Filas
         for (int i = 0; i < n; i++) {
             System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
             for (int j = 0; j < n; j++) {

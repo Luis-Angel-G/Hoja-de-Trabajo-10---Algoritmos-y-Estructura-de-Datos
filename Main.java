@@ -3,16 +3,14 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         try (Scanner scanner = new Scanner(System.in)) {
-            GenericGraph grafo = new GenericGraph(true, true); // dirigido y ponderado
+            GenericGraph grafo = new GenericGraph(true, true);
 
-            // Asignar nombres iniciales
             grafo.asignarNombre(0, "Ciudad de Guatemala");
             grafo.asignarNombre(1, "Zacapa");
             grafo.asignarNombre(2, "Chiquimula");
             grafo.asignarNombre(3, "Quetzaltenango");
             grafo.asignarNombre(4, "Cobán");
 
-            // Aristas iniciales
             grafo.addEdge(0, 1, 3);
             grafo.addEdge(0, 3, 7);
             grafo.addEdge(1, 2, 1);
