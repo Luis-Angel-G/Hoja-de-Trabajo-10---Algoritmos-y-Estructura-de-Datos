@@ -6,14 +6,17 @@ public class CentroDelGrafo {
         int menorExcentricidad = infinito;
 
         for (int i = 0; i < n; i++) {
+            boolean conectado = false;
             int excentricidad = 0;
+
             for (int j = 0; j < n; j++) {
                 if (i != j && distancias[i][j] != infinito) {
                     excentricidad = Math.max(excentricidad, distancias[i][j]);
+                    conectado = true;
                 }
             }
 
-            if (excentricidad < menorExcentricidad) {
+            if (conectado && excentricidad < menorExcentricidad) {
                 menorExcentricidad = excentricidad;
                 centro = i;
             }
