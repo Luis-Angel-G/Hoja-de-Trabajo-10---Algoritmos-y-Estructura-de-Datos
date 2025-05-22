@@ -45,21 +45,23 @@ public class Floyd {
 
     public static void imprimirMatrizConNombres(int[][] matriz, int infinito, GenericGraph grafo) {
         int n = matriz.length;
+        int colWidth = 22; // Ajusta el ancho de cada columna
 
-        System.out.print("     ");
+        System.out.println("\nMatriz de distancias más cortas:");
+
+        // Imprimir encabezado de columnas
+        System.out.printf("%-" + colWidth + "s", "");
         for (int i = 0; i < n; i++) {
-            System.out.printf("%-20s", grafo.obtenerNombre(i));
+            System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
         }
         System.out.println();
 
+        // Imprimir filas con nombres
         for (int i = 0; i < n; i++) {
-            System.out.printf("%-4s ", grafo.obtenerNombre(i));
+            System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
             for (int j = 0; j < n; j++) {
-                if (matriz[i][j] == infinito) {
-                    System.out.printf("%-20s", "INF");
-                } else {
-                    System.out.printf("%-20d", matriz[i][j]);
-                }
+                String valor = (matriz[i][j] == infinito) ? "INF" : String.valueOf(matriz[i][j]);
+                System.out.printf("%-" + colWidth + "s", valor);
             }
             System.out.println();
         }
@@ -67,22 +69,28 @@ public class Floyd {
 
     public static void imprimirMatrizSiguiente(int[][] next, GenericGraph grafo) {
         int n = next.length;
+        int colWidth = 22;
 
         System.out.println("\nTabla de rutas (siguiente nodo):");
-        System.out.print("     ");
+
+        // Encabezado
+        System.out.printf("%-" + colWidth + "s", "");
         for (int i = 0; i < n; i++) {
-            System.out.printf("%-20s", grafo.obtenerNombre(i));
+            System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
         }
         System.out.println();
 
+        // Filas
         for (int i = 0; i < n; i++) {
-            System.out.printf("%-4s ", grafo.obtenerNombre(i));
+            System.out.printf("%-" + colWidth + "s", grafo.obtenerNombre(i));
             for (int j = 0; j < n; j++) {
+                String valor;
                 if (i == j || next[i][j] == -1) {
-                    System.out.printf("%-20s", "-");
+                    valor = "-";
                 } else {
-                    System.out.printf("%-20s", grafo.obtenerNombre(next[i][j]));
+                    valor = grafo.obtenerNombre(next[i][j]);
                 }
+                System.out.printf("%-" + colWidth + "s", valor);
             }
             System.out.println();
         }
