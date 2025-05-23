@@ -86,7 +86,6 @@ public class GenericGraph {
     }
 
     int[][] obtenerMatrizDeAdyacencia() {
-        // Mapea los nodos existentes a índices de matriz
         int n = adjList.size();
         int[] nodos = adjList.keySet().stream().sorted().mapToInt(Integer::intValue).toArray();
         int[][] matriz = new int[n][n];
@@ -96,12 +95,10 @@ public class GenericGraph {
             matriz[i][i] = 0;
         }
 
-        // Llenar la matriz usando el mapeo de nodos
         for (int i = 0; i < n; i++) {
             int de = nodos[i];
             for (Edge edge : adjList.get(de)) {
                 int j = -1;
-                // Buscar el índice del nodo destino
                 for (int k = 0; k < n; k++) {
                     if (nodos[k] == edge.to) {
                         j = k;
@@ -117,9 +114,6 @@ public class GenericGraph {
         return matriz;
     }
 
-    /**
-     * Devuelve los nodos actuales en orden de índice de matriz.
-     */
     int[] obtenerNodos() {
         return adjList.keySet().stream().sorted().mapToInt(Integer::intValue).toArray();
     }
