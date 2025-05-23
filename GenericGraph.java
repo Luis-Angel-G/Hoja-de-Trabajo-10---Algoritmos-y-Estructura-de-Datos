@@ -4,23 +4,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Implementación de un grafo genérico dirigido y/o ponderado.
+ * Permite agregar y eliminar vértices y aristas, asignar nombres a los nodos,
+ * obtener la matriz de adyacencia y mostrar el grafo.
+ */
 public class GenericGraph {
-    class Edge {
-        int to;
-        int weight;
 
-        Edge(int to, int weight) {
-            this.to = to;
-            this.weight = weight;
-        }
-    }
-
-    private final boolean directed;
-    private final boolean weighted;
-    private final Map<Integer, List<Edge>> adjList;
-    private final Map<Integer, String> nombreNodos;
-    public static final int infinito = Integer.MAX_VALUE / 2;
-
+    /**
+     * Crea un nuevo grafo.
+     * @param directed true si el grafo es dirigido.
+     * @param weighted true si el grafo es ponderado.
+     */
     GenericGraph(boolean directed, boolean weighted) {
         this.directed = directed;
         this.weighted = weighted;
@@ -28,18 +23,38 @@ public class GenericGraph {
         this.nombreNodos = new HashMap<>();
     }
 
+    /**
+     * Agrega un vértice al grafo.
+     * @param vertex identificador del vértice.
+     */
     void addVertex(int vertex) {
         adjList.putIfAbsent(vertex, new ArrayList<>());
     }
 
+    /**
+     * Asigna un nombre a un nodo.
+     * @param id identificador del nodo.
+     * @param nombre nombre a asignar.
+     */
     void asignarNombre(int id, String nombre) {
         nombreNodos.put(id, nombre);
     }
 
+    /**
+     * Obtiene el nombre de un nodo.
+     * @param id identificador del nodo.
+     * @return nombre del nodo.
+     */
     String obtenerNombre(int id) {
         return nombreNodos.getOrDefault(id, "Nodo " + id);
     }
 
+    /**
+     * Agrega una arista entre dos nodos.
+     * @param from nodo origen.
+     * @param to nodo destino.
+     * @param weight peso de la arista.
+     */
     void addEdge(int from, int to, int weight) {
         if (!weighted) {
             weight = 1;
@@ -54,6 +69,11 @@ public class GenericGraph {
         }
     }
 
+    /**
+     * Elimina una arista entre dos nodos.
+     * @param from nodo origen.
+     * @param to nodo destino.
+     */
     void removeEdge(int from, int to) {
         List<Edge> edgesFrom = adjList.get(from);
         if (edgesFrom != null) {
@@ -67,6 +87,10 @@ public class GenericGraph {
         }
     }
 
+    /**
+     * Elimina un nodo y todas sus aristas asociadas.
+     * @param vertex identificador del nodo.
+     */
     void removeVertex(int vertex) {
         adjList.remove(vertex);
         nombreNodos.remove(vertex);
@@ -75,6 +99,9 @@ public class GenericGraph {
         }
     }
 
+    /**
+     * Imprime la lista de adyacencia del grafo.
+     */
     void printGraph() {
         for (int vertex : adjList.keySet()) {
             System.out.print(obtenerNombre(vertex) + " (" + vertex + "):");
@@ -85,6 +112,10 @@ public class GenericGraph {
         }
     }
 
+    /**
+     * Obtiene la matriz de adyacencia del grafo.
+     * @return matriz de adyacencia.
+     */
     int[][] obtenerMatrizDeAdyacencia() {
         int n = adjList.size();
         int[] nodos = adjList.keySet().stream().sorted().mapToInt(Integer::intValue).toArray();
@@ -114,7 +145,27 @@ public class GenericGraph {
         return matriz;
     }
 
+    /**
+     * Obtiene los identificadores de los nodos del grafo.
+     * @return arreglo de identificadores.
+     */
     int[] obtenerNodos() {
         return adjList.keySet().stream().sorted().mapToInt(Integer::intValue).toArray();
     }
+
+    class Edge {
+        int to;
+        int weight;
+
+        Edge(int to, int weight) {
+            this.to = to;
+            this.weight = weight;
+        }
+    }
+
+    private final boolean directed;
+    private final boolean weighted;
+    private final Map<Integer, List<Edge>> adjList;
+    private final Map<Integer, String> nombreNodos;
+    public static final int infinito = Integer.MAX_VALUE / 2;
 }

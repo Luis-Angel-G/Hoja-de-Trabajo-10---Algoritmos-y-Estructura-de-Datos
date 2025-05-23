@@ -1,6 +1,6 @@
 import networkx as nx
 
-# Diccionario de nombres personalizados
+# Diccionario de nombres personalizados para los nodos
 nombres = {
     'A': 'Ciudad de Guatemala',
     'B': 'Zacapa',
@@ -14,7 +14,7 @@ G = nx.DiGraph()
 for nodo, nombre in nombres.items():
     G.add_node(nodo, nombre=nombre)
 
-# Agregar aristas iniciales
+# Agregar aristas iniciales con pesos
 G.add_weighted_edges_from([
     ('A', 'B', 3),
     ('A', 'D', 7),
@@ -26,6 +26,9 @@ G.add_weighted_edges_from([
 ])
 
 def floyd_matriz():
+    """
+    Muestra la matriz de distancias más cortas entre todos los pares de nodos usando el algoritmo de Floyd-Warshall.
+    """
     ciudades = list(G.nodes)
     floyd = dict(nx.floyd_warshall(G, weight='weight'))
 
@@ -37,9 +40,13 @@ def floyd_matriz():
         print(f" <- {G.nodes[i]['nombre']}")
 
 def centro_del_grafo():
+    """
+    Calcula y muestra el centro del grafo (nodo con menor excentricidad).
+    """
     floyd = dict(nx.floyd_warshall(G, weight='weight'))
     excentricidades = {}
     for origen in floyd:
+        # Calcula la excentricidad de cada nodo (la mayor distancia a otro nodo)
         distancias = [d for destino, d in floyd[origen].items() if d < float('inf') and origen != destino]
         if distancias:
             excentricidades[origen] = max(distancias)
@@ -50,11 +57,17 @@ def centro_del_grafo():
         print("No se pudo determinar un centro (grafo desconectado).")
 
 def mostrar_grafo():
+    """
+    Muestra todas las aristas del grafo con sus pesos y nombres de nodos.
+    """
     print("\nGrafo actual:")
     for u, v, data in G.edges(data=True):
         print(f"{G.nodes[u]['nombre']} ({u}) -> {G.nodes[v]['nombre']} ({v}) con peso {data['weight']}")
 
 def menu():
+    """
+    Muestra el menú interactivo para manipular el grafo.
+    """
     while True:
         print("\n--- MENÚ ---")
         print("1. Mostrar matriz de caminos más cortos (Floyd)")
@@ -72,6 +85,7 @@ def menu():
         elif opcion == '2':
             centro_del_grafo()
         elif opcion == '3':
+            # Agregar un nuevo nodo
             nodo = input("ID del nuevo nodo (letra): ").strip().upper()
             if nodo in G:
                 print("Ese nodo ya existe.")
@@ -80,6 +94,7 @@ def menu():
                 G.add_node(nodo, nombre=nombre)
                 print(f"Nodo {nodo} agregado.")
         elif opcion == '4':
+            # Eliminar un nodo existente
             nodo = input("ID del nodo a eliminar: ").strip().upper()
             if nodo in G:
                 G.remove_node(nodo)
@@ -87,6 +102,7 @@ def menu():
             else:
                 print("Ese nodo no existe.")
         elif opcion == '5':
+            # Agregar una arista entre dos nodos
             origen = input("Nodo origen: ").strip().upper()
             destino = input("Nodo destino: ").strip().upper()
             peso = int(input("Peso de la arista: "))
@@ -96,6 +112,7 @@ def menu():
             else:
                 print("Uno o ambos nodos no existen.")
         elif opcion == '6':
+            # Eliminar una arista existente
             origen = input("Nodo origen: ").strip().upper()
             destino = input("Nodo destino: ").strip().upper()
             if G.has_edge(origen, destino):

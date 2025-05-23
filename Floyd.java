@@ -1,15 +1,35 @@
+/**
+ * Implementa el algoritmo de Floyd-Warshall para encontrar caminos más cortos entre todos los pares de nodos.
+ * Incluye métodos para calcular distancias y rutas, e imprimir las matrices resultantes.
+ */
 public class Floyd {
 
+    /**
+     * Estructura para almacenar el resultado del algoritmo de Floyd-Warshall.
+     */
     public static class ResultadoFloyd {
+        /** Matriz de distancias más cortas. */
         public int[][] distancias;
+        /** Matriz de nodos siguientes para reconstruir caminos. */
         public int[][] siguiente;
 
+        /**
+         * Constructor del resultado de Floyd.
+         * @param distancias matriz de distancias.
+         * @param siguiente matriz de nodos siguientes.
+         */
         public ResultadoFloyd(int[][] distancias, int[][] siguiente) {
             this.distancias = distancias;
             this.siguiente = siguiente;
         }
     }
 
+    /**
+     * Calcula las distancias y rutas más cortas entre todos los pares de nodos.
+     * @param matriz matriz de adyacencia.
+     * @param infinito valor que representa infinito.
+     * @return resultado con matrices de distancias y siguientes.
+     */
     public static ResultadoFloyd calcularConRutas(int[][] matriz, int infinito) {
         int n = matriz.length;
         int[][] dist = new int[n][n];
@@ -42,6 +62,12 @@ public class Floyd {
         return new ResultadoFloyd(dist, next);
     }
 
+    /**
+     * Imprime la matriz de distancias con los nombres de los nodos.
+     * @param matriz matriz de distancias.
+     * @param infinito valor que representa infinito.
+     * @param grafo grafo de referencia para los nombres.
+     */
     public static void imprimirMatrizConNombres(int[][] matriz, int infinito, GenericGraph grafo) {
         int n = matriz.length;
         int colWidth = 22;
@@ -64,6 +90,11 @@ public class Floyd {
         }
     }
 
+    /**
+     * Imprime la tabla de rutas (matriz de siguientes) con los nombres de los nodos.
+     * @param next matriz de siguientes.
+     * @param grafo grafo de referencia para los nombres.
+     */
     public static void imprimirMatrizSiguiente(int[][] next, GenericGraph grafo) {
         int n = next.length;
         int colWidth = 22;

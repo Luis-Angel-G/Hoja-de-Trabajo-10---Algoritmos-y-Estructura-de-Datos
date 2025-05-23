@@ -2,12 +2,18 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-// Java
-
+/**
+ * Clase de pruebas unitarias para las funcionalidades principales del grafo y algoritmos asociados.
+ * Utiliza JUnit 5 para validar operaciones sobre la clase GenericGraph, Floyd y CentroDelGrafo.
+ */
 public class MainTest {
 
+    /** Grafo de prueba utilizado en los tests. */
     GenericGraph grafo;
 
+    /**
+     * Inicializa el grafo antes de cada prueba, agregando nodos, nombres y aristas.
+     */
     @BeforeEach
     void setUp() {
         grafo = new GenericGraph(true, true);
@@ -19,6 +25,9 @@ public class MainTest {
         grafo.addEdge(0, 2, 10);
     }
 
+    /**
+     * Prueba la adición de un vértice y la asignación de su nombre.
+     */
     @Test
     void testAddVertexAndName() {
         grafo.addVertex(3);
@@ -26,6 +35,9 @@ public class MainTest {
         assertEquals("D", grafo.obtenerNombre(3));
     }
 
+    /**
+     * Prueba la adición de aristas y la correcta generación de la matriz de adyacencia.
+     */
     @Test
     void testAddEdgeAndAdjacencyMatrix() {
         int[][] matriz = grafo.obtenerMatrizDeAdyacencia();
@@ -35,6 +47,9 @@ public class MainTest {
         assertEquals(GenericGraph.infinito, matriz[2][0]);
     }
 
+    /**
+     * Prueba la eliminación de una arista y su reflejo en la matriz de adyacencia.
+     */
     @Test
     void testRemoveEdge() {
         grafo.removeEdge(0, 1);
@@ -42,6 +57,9 @@ public class MainTest {
         assertEquals(GenericGraph.infinito, matriz[0][1]);
     }
 
+    /**
+     * Prueba la eliminación de un vértice y la actualización de la matriz y nodos.
+     */
     @Test
     void testRemoveVertex() {
         grafo.removeVertex(1);
@@ -64,32 +82,44 @@ public class MainTest {
         }
     }
 
+    /**
+     * Prueba el algoritmo de Floyd-Warshall para obtener caminos más cortos.
+     */
     @Test
     void testFloydShortestPaths() {
         int[][] matriz = grafo.obtenerMatrizDeAdyacencia();
         Floyd.ResultadoFloyd resultado = Floyd.calcularConRutas(matriz, GenericGraph.infinito);
-        assertEquals(7, resultado.distancias[0][2]); // 0->1->2 = 5+2=7, which is less than direct 10
+        assertEquals(7, resultado.distancias[0][2]); // 0->1->2 = 5+2=7, menor que el directo 10
         assertEquals(0, resultado.distancias[0][0]);
         assertEquals(GenericGraph.infinito, resultado.distancias[2][0]);
     }
 
+    /**
+     * Prueba la matriz de nodos siguientes generada por Floyd-Warshall.
+     */
     @Test
     void testFloydNextMatrix() {
         int[][] matriz = grafo.obtenerMatrizDeAdyacencia();
         Floyd.ResultadoFloyd resultado = Floyd.calcularConRutas(matriz, GenericGraph.infinito);
-        assertEquals(1, resultado.siguiente[0][2]); // Next from 0 to 2 is 1 (0->1->2)
+        assertEquals(1, resultado.siguiente[0][2]); // Siguiente de 0 a 2 es 1 (0->1->2)
         assertEquals(-1, resultado.siguiente[2][0]);
     }
 
+    /**
+     * Prueba el cálculo del centro del grafo.
+     */
     @Test
     void testCentroDelGrafo() {
         int[][] matriz = grafo.obtenerMatrizDeAdyacencia();
         Floyd.ResultadoFloyd resultado = Floyd.calcularConRutas(matriz, GenericGraph.infinito);
         int centro = CentroDelGrafo.calcular(resultado.distancias, GenericGraph.infinito);
-        // Node 1 is the center (max distance to others is 2)
+        // El nodo 1 es el centro (máxima distancia a otros es 2)
         assertEquals(1, centro);
     }
 
+    /**
+     * Prueba que la impresión del grafo no lanza excepciones.
+     */
     @Test
     void testPrintGraphNoException() {
         assertDoesNotThrow(() -> grafo.printGraph());

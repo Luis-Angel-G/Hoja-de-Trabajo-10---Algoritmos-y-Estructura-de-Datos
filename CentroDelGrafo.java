@@ -1,5 +1,15 @@
+/**
+ * Clase utilitaria para calcular el centro de un grafo a partir de la matriz de distancias.
+ * El centro es el nodo con menor excentricidad (distancia máxima mínima a los demás nodos).
+ */
 public class CentroDelGrafo {
 
+    /**
+     * Calcula el centro del grafo a partir de la matriz de distancias.
+     * @param distancias matriz de distancias.
+     * @param infinito valor que representa infinito.
+     * @return índice del nodo centro, o -1 si no existe.
+     */
     public static int calcular(int[][] distancias, int infinito) {
         int n = distancias.length;
         int centro = -1;
